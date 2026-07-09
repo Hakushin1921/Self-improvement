@@ -45,4 +45,35 @@ char* reverseStr(char* s, int k) {
 }
 ```
 
-## 方法二 双指针
+## 方法二 拆分区间
+将原字符串按k拆分为多个区间，对每个区间遍历，在每个区间内实现反转操作。灵茶山大佬的解法。
+### 易错点
+最好将反转的功能拆分封装，最后一个区间右端点记得比较一下大小
+### 代码
+```c
+#define MIN(a, b) (a < b ? a : b)
+#include <concepts>
+#include <cstring>
+
+void swap(char* s, int left, int right)
+{
+    while (left < right)
+    {
+        char t = s[left];
+        s[left++] = s[right];
+        s[right--] = t;
+    }
+}
+
+char* reverseStr(char* s, int k)
+{
+    int len = strlen(s);
+    for (int i = 0; i < len; i += 2 * k)
+    {
+        swap(s, i, MIN(i + k, len) - 1);
+    }
+    return s;
+}
+
+
+```
